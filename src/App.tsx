@@ -6,16 +6,16 @@ const STRIKE = 'X';
 const SPARE = '/';
 
 const data: RoundScore[] = [
-  { first: 10, second: 10 },
-  { first: 3, second: 7 },
-  { first: 5, second: 6 },
-  { first: 7, second: 8 },
-  { first: 9, second: 0 },
-  { first: 1, second: 2 },
-  { first: 3, second: 4 },
-  { first: 5, second: 6 },
-  { first: 7, second: 8 },
-  { first: 9, second: 0 },
+  { first: 1, second: 1 },
+  { first: 1, second: 1 },
+  { first: 1, second: 1 },
+  { first: 1, second: 1 },
+  { first: 1, second: 1 },
+  { first: 1, second: 1 },
+  { first: 1, second: 1 },
+  { first: 1, second: 1 },
+  { first: 1, second: 1 },
+  { first: 1, second: 1 },
 ];
 
 function App() {
@@ -23,6 +23,17 @@ function App() {
   
   const resetScores = () => {
     setScores([]);
+  }
+
+  function calculateScore(scores: RoundScore[]): RoundScore[] {
+    const totaledScores = [...scores];
+    let total = 0; 
+    for (const score of totaledScores) {
+      total += (score.first ?? 0 )+ (score?.second ?? 0) ;
+      score.total = total;
+    }
+    
+    return totaledScores;
   }
 
   function convertScoreToSymbol(score: RoundScore): DisplayScore {
@@ -34,7 +45,7 @@ function App() {
 
   return (
     <>
-      <Scoreboard scores={scores.map(convertScoreToSymbol)} />
+      <Scoreboard scores={calculateScore(scores).map(convertScoreToSymbol)} />
       <ResetButton resetScores={resetScores}/>
     </>
   );
