@@ -1,34 +1,43 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import './App.css'
+import { useState } from 'react';
+import ResetButton from './ResetButton';
+import Scoreboard from './Scoreboard';
+
+const STRIKE = 'X';
+const SPARE = '/';
+
+const data: RoundScore[] = [
+  { first: 10, second: 10 },
+  { first: 3, second: 7 },
+  { first: 5, second: 6 },
+  { first: 7, second: 8 },
+  { first: 9, second: 0 },
+  { first: 1, second: 2 },
+  { first: 3, second: 4 },
+  { first: 5, second: 6 },
+  { first: 7, second: 8 },
+  { first: 9, second: 0 },
+];
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [scores, setScores] = useState<RoundScore[]>(data);
+  
+  const resetScores = () => {
+    setScores([]);
+  }
+
+  function convertScoreToSymbol(score: RoundScore): DisplayScore {
+    if (score.first === 10) return { ...score, first: STRIKE, second: undefined };
+    const total = (score?.first ?? 0) + (score?.second ?? 0);
+    if (total === 10 ) return { ...score, second: SPARE };
+    return score; 
+  }
 
   return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </div>
-  )
+    <>
+      <Scoreboard scores={scores.map(convertScoreToSymbol)} />
+      <ResetButton resetScores={resetScores}/>
+    </>
+  );
 }
 
-export default App
+export default App;
