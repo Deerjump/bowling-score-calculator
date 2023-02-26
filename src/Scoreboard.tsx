@@ -11,7 +11,7 @@ function Scoreboard({ scores }: ScoreboardProps) {
       {Array.from({ length: 10 }).map((_, i) => {
         const score = scores[i];
         return (
-          <Frame
+          <Frame key={i}
             roundNumber={++i}
             firstScore={score?.first}
             secondScore={score?.second}

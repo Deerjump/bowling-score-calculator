@@ -9,7 +9,7 @@ type FrameProps = {
 
 function Frame({ roundNumber, firstScore, secondScore, total }: FrameProps) {
   return (
-    <div className={styles.frame} key={roundNumber}>
+    <div className={styles.frame} >
       <div className={`${styles.frameHeader} ${styles.centeredText}`}>{roundNumber}</div>
       <div className={styles.score}>
         <div className={styles.centeredText}>{firstScore}</div>
