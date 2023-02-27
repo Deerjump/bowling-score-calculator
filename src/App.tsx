@@ -6,12 +6,12 @@ const STRIKE = 'X';
 const SPARE = '/';
 
 const data: RoundScore[] = [
+  { first: 10, second: 0 },
   { first: 1, second: 1 },
   { first: 1, second: 1 },
   { first: 1, second: 1 },
   { first: 1, second: 1 },
-  { first: 1, second: 1 },
-  { first: 1, second: 1 },
+  { first: 1, second: 9 },
   { first: 1, second: 1 },
   { first: 1, second: 1 },
   { first: 1, second: 1 },
@@ -25,11 +25,17 @@ function App() {
     setScores([]);
   }
 
+  function changeScore(round: number, score: RoundScore) {
+    const scoresCopy = [...scores];
+
+    scoresCopy[round] = score;
+  }
+
   function calculateScore(scores: RoundScore[]): RoundScore[] {
     const totaledScores = [...scores];
     let total = 0; 
     for (const score of totaledScores) {
-      total += (score.first ?? 0 )+ (score?.second ?? 0) ;
+      total += (score.first ?? 0 )+ (score?.second ?? 0);
       score.total = total;
     }
     
@@ -37,7 +43,7 @@ function App() {
   }
 
   function convertScoreToSymbol(score: RoundScore): DisplayScore {
-    if (score.first === 10) return { ...score, first: STRIKE, second: undefined };
+    if (score.first === 10) return { ...score, first: undefined, second: STRIKE };
     const total = (score?.first ?? 0) + (score?.second ?? 0);
     if (total === 10 ) return { ...score, second: SPARE };
     return score; 
