@@ -3,18 +3,23 @@ import styles from './Scoreboard.module.css';
 
 type ScoreboardProps = {
   scores: DisplayScore[];
+  updateScore: (round: number, roundScore: RoundScore) => void;
 };
 
-function Scoreboard({ scores }: ScoreboardProps) {
-    return (
+function Scoreboard({ scores, updateScore }: ScoreboardProps) {
+  
+  return (
     <div className={styles.scoreboard}>
       {Array.from({ length: 10 }).map((_, i) => {
         const score = scores[i];
+
         return (
-          <Frame key={i}
+          <Frame
+            key={i}
+            updateScore={updateScore}
             roundNumber={++i}
-            firstScore={score?.first}
-            secondScore={score?.second}
+            firstScore={score?.first ?? ''}
+            secondScore={score?.second ?? ''}
             total={score?.total}
           ></Frame>
         );
